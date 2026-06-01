@@ -26,7 +26,7 @@ jobs:
         run: |
           mkdir -p www
           cp index.html www/ 2>/dev/null || true
-          echo '{ "appId": "com.wood2048.game", "appName": "Wood 2048", "webDir": "www", "bundledWebRuntime": false }' > capacitor.config.json
+          echo '{ "appId": "com.oyun2048.game", "appName": "2048", "webDir": "www", "bundledWebRuntime": false }' > capacitor.config.json
 
       - name: Android Altyapisini Kur
         run: |
@@ -48,5 +48,5 @@ jobs:
       - name: APK Dosyasini İndirime Hazirla
         uses: actions/upload-artifact@v4
         with:
-          name: Wood-2048-Oyun-APK
+          name: 2048-Oyun-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
