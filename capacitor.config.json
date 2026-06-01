@@ -1,0 +1,6 @@
+{
+  "appId": "com.benimoyunum.wood2048",
+  "appName": "Wood 2048",
+  "webDir": ".",
+  "bundledWebRuntime": false
+}
