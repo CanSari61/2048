@@ -5,9 +5,6 @@ on:
     branches: [ "main", "master", "ana" ]
   workflow_dispatch:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build:
     name: Build APK
@@ -22,30 +19,33 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Kutuphaneleri Yukle
-        run: npm install
+      - name: Gerekli Kutuphaneleri Zorla Yukle
+        run: npm install @capacitor/core @capacitor/cli @capacitor/android
 
-      - name: Capacitor Android Ekle
+      - name: Dosya ve Klasorleri Duzenle (Hata Onleyici)
         run: |
-          npx cap add android || echo "Android zaten ekli, devam ediyorum..."
+          mkdir -p www
+          cp index.html www/ 2>/dev/null || true
+          echo '{ "appId": "com.wood2048.game", "appName": "Wood 2048", "webDir": "www", "bundledWebRuntime": false }' > capacitor.config.json
+
+      - name: Android Altyapisini Kur
+        run: |
+          npx cap add android || true
           npx cap sync android
 
-      - name: Java Kurulumu
+      - name: Java 17 Kurulumu
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Android SDK Kurulumu
-        uses: android-actions/setup-android@v3
-
-      - name: APK Derleme İslemi
+      - name: APK Derleme (Gradle)
         run: |
           cd android
           chmod +x ./gradlew
           ./gradlew assembleDebug
 
-      - name: APK'yi Yukari Cikar
+      - name: APK Dosyasini İndirime Hazirla
         uses: actions/upload-artifact@v4
         with:
           name: Wood-2048-Oyun-APK
