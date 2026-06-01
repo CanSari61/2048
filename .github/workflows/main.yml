@@ -5,6 +5,9 @@ on:
     branches: [ "main", "master", "ana" ]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     name: Build APK
@@ -17,7 +20,7 @@ jobs:
       - name: Node.js Kurulumu
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Capacitor Yukle
         run: npm install
@@ -39,7 +42,7 @@ jobs:
           chmod +x ./gradlew
           ./gradlew assembleDebug
 
-      - name: APK'yi Yukari Cikar (Indirme Linki)
+      - name: APK'yi Yukari Cikar
         uses: actions/upload-artifact@v4
         with:
           name: Wood-2048-Oyun-APK
