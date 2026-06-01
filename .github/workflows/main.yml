@@ -22,19 +22,22 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Capacitor Yukle
+      - name: Kutuphaneleri Yukle
         run: npm install
 
-      - name: Android Projesini Hazirla
+      - name: Capacitor Android Ekle
         run: |
-          npx cap add android
+          npx cap add android || echo "Android zaten ekli, devam ediyorum..."
           npx cap sync android
 
       - name: Java Kurulumu
         uses: actions/setup-java@v4
         with:
-          distribution: 'zulu'
+          distribution: 'temurin'
           java-version: '17'
+
+      - name: Android SDK Kurulumu
+        uses: android-actions/setup-android@v3
 
       - name: APK Derleme İslemi
         run: |
